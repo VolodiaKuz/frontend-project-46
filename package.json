@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This is my 2nd studying project on Hexlet. It is a console utility - 'Difference generator'",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,10 +11,16 @@
     "type": "git",
     "url": "https://github.com/VolodiaKuz/frontend-project-46.git"
   },
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
   "author": "VolodiaKuz",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/VolodiaKuz/frontend-project-46/issues"
   },
-  "homepage": "https://github.com/VolodiaKuz/frontend-project-46#readme"
+  "homepage": "https://github.com/VolodiaKuz/frontend-project-46#readme",
+  "dependencies": {
+    "commander": "^11.1.0"
+  }
 }
