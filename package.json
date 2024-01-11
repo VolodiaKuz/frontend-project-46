@@ -12,7 +12,7 @@
     "url": "https://github.com/VolodiaKuz/frontend-project-46.git"
   },
   "bin": {
-    "gendiff": "src/gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "author": "VolodiaKuz",
   "license": "ISC",
