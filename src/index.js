@@ -1,28 +1,15 @@
 #!/usr/bin/env node
-import { program } from 'commander';
+//  const path = require('path');
+import { pathResolver, fileReader } from './utils.js';
 
 const gendiff = (filepath1, filepath2) => {
-  console.log('hello Volod');
+  const file1 = fileReader(pathResolver(filepath1));
+  const file2 = fileReader(pathResolver(filepath2));
+  const obj1 = JSON.parse(file1);
+  const obj2 = JSON.parse(file2);
+  console.log(obj1);
+  console.log(obj2);
+  return obj1;
 };
-
-program
-  .name('gendiff')
-  .description('  Compares two configuration files and shows a difference.')
-  .version('1.0.0')
-  .argument('<filepath1>')
-  .argument('<filepath2>')
-  .option('-f, --format <type>', 'output format');
-
-// program
-//   .command('diff')
-//   .description('This command generates the difference between 2 files')
-//   .argument('<first>', 'path to first file')
-//   .argument('<second>', 'path to second file')
-//   .action((first, second) => {
-//     const result = gendiff();
-//     console.log(result);
-//   });
-
-program.parse();
 
 export default gendiff;
