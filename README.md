@@ -3,6 +3,4 @@
 
 Asciinema of gendiff function usage:
 <br>
-<script async id="asciicast-AFpCGSWufx56NxdvJt4Y7AEXh" src="https://asciinema.org/a/AFpCGSWufx56NxdvJt4Y7AEXh.js"></script>
-
-<a href="https://asciinema.org/a/AFpCGSWufx56NxdvJt4Y7AEXh" target="_blank"><img src="https://asciinema.org/a/AFpCGSWufx56NxdvJt4Y7AEXh.svg" /></a>
+<a href="https://asciinema.org/a/AFpCGSWufx56NxdvJt4Y7AEXh" target="_blank"><img src="https://asciinema.org/a/AFpCGSWufx56NxdvJt4Y7AEXh.svg" width="100" height="100" /></a>
