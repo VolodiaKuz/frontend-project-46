@@ -1,4 +1,4 @@
-name: test-workflow-2nd-lesson
+name: nodejs
 # on – определяет события, которые запускают воркфлоу
 on: push
 jobs:
@@ -15,8 +15,8 @@ jobs:
       - name: install
         run: make install
 
-      # - name: run tests
-      #   run: make test
+      - name: run tests
+        run: make test
 
       - name: run linter
         run: make lint
