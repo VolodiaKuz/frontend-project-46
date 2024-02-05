@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import genDiff from '../src/index.js';
 import { program } from 'commander';
+import genDiff from '../src/index.js';
 
 program
   .name('gendiff')
@@ -11,18 +11,10 @@ program
   .option('-f, --format <type>', 'output format')
   .action((filepath1, filepath2) => {
     const result = genDiff(filepath1, filepath2);
-    
     const options = program.opts();
     if (options.format) {
-      console.log('gendiff started with options')
-    } else
-
-    console.log(result);
-  })
-
-  program.command('join')
-  .action(() => {
-    console.log('gendiff started with extra command');
+      console.log('gendiff started with options');
+    } else console.log(result);
   });
 
 program.parse(process.argv);
