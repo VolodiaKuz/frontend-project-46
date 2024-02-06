@@ -4,6 +4,7 @@
 Maintainability:
 <br>
 <a href="https://codeclimate.com/github/VolodiaKuz/frontend-project-46/maintainability"><img src="https://api.codeclimate.com/v1/badges/017f9c68dfa72289a682/maintainability" /></a>
+<a href="https://codeclimate.com/github/VolodiaKuz/frontend-project-46/test_coverage"><img src="https://api.codeclimate.com/v1/badges/017f9c68dfa72289a682/test_coverage" /></a>
 [![nodejs](https://github.com/VolodiaKuz/frontend-project-46/actions/workflows/nodejs.yml/badge.svg)](https://github.com/VolodiaKuz/frontend-project-46/actions)
 
 Asciinema of gendiff function usage:
