@@ -8,7 +8,7 @@ const genDiff = (filepath1, filepath2) => {
   const obj2 = JSON.parse(file2);
   const sortedKeys1 = Object.keys(obj1).sort();
   const sortedKeys2 = Object.keys(obj2).sort();
-  let result = '';
+  let result = '\n';
   result += '{';
   for (const key of sortedKeys1) {
     if (Object.hasOwn(obj2, key) && obj1[key] === obj2[key]) {
