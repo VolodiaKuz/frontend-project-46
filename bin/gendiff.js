@@ -9,12 +9,15 @@ program
   .argument('<filepath1>', 'path to first file')
   .argument('<filepath2>', 'path to second file')
   .option('-f, --format <type>', 'output format')
-  .action((filepath1, filepath2) => {
-    const result = genDiff(filepath1, filepath2);
-    const options = program.opts();
-    if (options.format) {
-      console.log('gendiff started with options');
-    } else console.log(result);
+  .action((filepath1, filepath2, keys) => {
+    const format = keys.format;
+    // if (format === 'plain') {
+    //   genDiff(filepath1, filepath2, format);
+    // } else {
+    //   genDiff(filepath1, filepath2)};
+    genDiff(filepath1, filepath2, format);
   });
 
 program.parse(process.argv);
+// gendiff __fixtures__/file1.json __fixtures__/file2.json
+// gendiff -f plain __fixtures__/file1.json __fixtures__/file2.json
