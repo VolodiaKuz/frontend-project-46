@@ -28,6 +28,7 @@ jobs:
         # Add Code Climate secret key
         env:
           # CC_TEST_REPORTER_ID: 6f44c41dc4945c09cde7ea336049afa6f6925d5e826b7e0a031c2c0eab79f5d0
+          # CC_TEST_REPORTER_ID: 6f44c41dc4945c09cde7ea336049afa6f6925d5e826b7e0a031c2c0eab79f5d0
           CC_TEST_REPORTER_ID: "${secrets.CC_TEST_REPORTER_ID}"
         with:
           coverageCommand: make test-coverage
