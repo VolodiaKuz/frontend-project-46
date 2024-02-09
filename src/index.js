@@ -2,10 +2,28 @@
 import { pathResolver, fileReader } from './utils.js';
 
 const genDiff = (filepath1, filepath2, format) => {
+
+  const checkFileType = (file) => {
+    const fileType = file.split(".")[1];
+    return fileType;
+  };
+
+  const parser = (file, fileType) => {
+    if (fileType === 'json') {
+      return JSON.parse(file)
+    }
+    if (fileType === 'yml' || fileType === 'yaml') {
+      console.log('check yml format');
+    }
+  }
+
+
   const file1 = fileReader(pathResolver(filepath1));
   const file2 = fileReader(pathResolver(filepath2));
-  const obj1 = JSON.parse(file1);
-  const obj2 = JSON.parse(file2);
+
+  const obj1 = parser(file1, checkFileType(filepath1));
+  const obj2 = parser(file2, checkFileType(filepath2));
+
   const sortedKeys1 = Object.keys(obj1).sort();
   const sortedKeys2 = Object.keys(obj2).sort();
   let result = '\n';
@@ -37,3 +55,5 @@ const genDiff = (filepath1, filepath2, format) => {
 };
 
 export default genDiff;
+// gendiff __fixtures__/file1.yml __fixtures__/file2.yaml
+// gendiff __fixtures__/file1.json __fixtures__/file2.json
