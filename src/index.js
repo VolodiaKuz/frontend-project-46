@@ -1,19 +1,21 @@
 #!/usr/bin/env node
-import { pathResolver, fileReader } from './utils.js';
 import * as yaml from 'js-yaml';
+import { pathResolver, fileReader } from './utils.js';
 
-const genDiff = (filepath1, filepath2, format) => {
+const genDiff = (filepath1, filepath2, format = undefined) => {
   const checkFileType = (file) => {
-    const fileType = file.split('.')[1];
+    let fileType;
+    if (file.endsWith('.json')) fileType = '.json';
+    if (file.endsWith('.yml') || file.endsWith('.yaml')) fileType = '.yml';
     return fileType;
   };
 
   const parser = (file, fileType) => {
     let result;
-    if (fileType === 'json') {
+    if (fileType === '.json') {
       result = JSON.parse(file);
     }
-    if (fileType === 'yml' || fileType === 'yaml') {
+    if (fileType === '.yml' || fileType === '.yaml') {
       result = yaml.load(file);
     }
     return result;
@@ -50,8 +52,8 @@ const genDiff = (filepath1, filepath2, format) => {
       }
     }
     result += '\n}';
-    console.log(result);
   }
+  console.log(result);
   return result;
 };
 
