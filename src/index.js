@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { pathResolver, fileReader } from './utils.js';
+import * as yaml from 'js-yaml';
 
 const genDiff = (filepath1, filepath2, format) => {
   const checkFileType = (file) => {
@@ -13,7 +14,7 @@ const genDiff = (filepath1, filepath2, format) => {
       result = JSON.parse(file);
     }
     if (fileType === 'yml' || fileType === 'yaml') {
-      console.log('check yml format');
+      result = yaml.load(file);
     }
     return result;
   };
