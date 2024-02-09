@@ -2,21 +2,21 @@
 import { pathResolver, fileReader } from './utils.js';
 
 const genDiff = (filepath1, filepath2, format) => {
-
   const checkFileType = (file) => {
-    const fileType = file.split(".")[1];
+    const fileType = file.split('.')[1];
     return fileType;
   };
 
   const parser = (file, fileType) => {
+    let result;
     if (fileType === 'json') {
-      return JSON.parse(file)
+      result = JSON.parse(file);
     }
     if (fileType === 'yml' || fileType === 'yaml') {
       console.log('check yml format');
     }
-  }
-
+    return result;
+  };
 
   const file1 = fileReader(pathResolver(filepath1));
   const file2 = fileReader(pathResolver(filepath2));
