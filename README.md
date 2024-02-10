@@ -20,3 +20,7 @@ npm link
 Asciinema of gendiff function usage:
 <br>
 <a href="https://asciinema.org/a/AFpCGSWufx56NxdvJt4Y7AEXh" target="_blank"><img src="https://asciinema.org/a/AFpCGSWufx56NxdvJt4Y7AEXh.svg" width="300" height="150" /></a>
+
+Asciinema of gendiff function usage with .yaml format:
+<br>
+<a href="https://asciinema.org/a/r61F2X9v3UrwwoF6noJLJ0iiW" target="_blank"><img src="https://asciinema.org/a/r61F2X9v3UrwwoF6noJLJ0iiW.svg" width="300" height="150" /></a>
