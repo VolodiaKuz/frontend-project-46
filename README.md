@@ -23,4 +23,4 @@ Asciinema of gendiff function usage:
 
 Asciinema of gendiff function usage with .yaml format:
 <br>
-<a href="https://asciinema.org/a/r61F2X9v3UrwwoF6noJLJ0iiW" target="_blank"><img src="https://asciinema.org/a/r61F2X9v3UrwwoF6noJLJ0iiW.svg" width="300" height="150" /></a>
+<a href="https://asciinema.org/a/r61F2X9v3UrwwoF6noJLJ0iiW" target="_blank"><img src="https://asciinema.org/a/r61F2X9v3UrwwoF6noJLJ0iiW.svg" height="150" /></a>
