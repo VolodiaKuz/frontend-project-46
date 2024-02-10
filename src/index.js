@@ -1,26 +1,8 @@
 #!/usr/bin/env node
-import * as yaml from 'js-yaml';
-import { pathResolver, fileReader } from './utils.js';
+import { pathResolver, fileReader, checkFileType } from './utils.js';
+import parser from './parsers.js';
 
 const genDiff = (filepath1, filepath2, format = undefined) => {
-  const checkFileType = (file) => {
-    let fileType;
-    if (file.endsWith('.json')) fileType = '.json';
-    if (file.endsWith('.yml') || file.endsWith('.yaml')) fileType = '.yml';
-    return fileType;
-  };
-
-  const parser = (file, fileType) => {
-    let result;
-    if (fileType === '.json') {
-      result = JSON.parse(file);
-    }
-    if (fileType === '.yml' || fileType === '.yaml') {
-      result = yaml.load(file);
-    }
-    return result;
-  };
-
   const file1 = fileReader(pathResolver(filepath1));
   const file2 = fileReader(pathResolver(filepath2));
 
