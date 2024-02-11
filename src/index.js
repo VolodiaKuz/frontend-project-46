@@ -2,6 +2,9 @@
 import { pathResolver, fileReader, checkFileType } from './utils.js';
 import parser from './parsers.js';
 
+// const file3 = fileReader(pathResolver('flat.result.txt'));
+// console.log(parser(file3, '.json'));
+
 const genDiff = (filepath1, filepath2, format = undefined) => {
   const file1 = fileReader(pathResolver(filepath1));
   const file2 = fileReader(pathResolver(filepath2));
@@ -42,3 +45,10 @@ const genDiff = (filepath1, filepath2, format = undefined) => {
 export default genDiff;
 // gendiff __fixtures__/file1.yml __fixtures__/file2.yaml
 // gendiff __fixtures__/file1.json __fixtures__/file2.json
+// gendiff __fixtures__/nested.file1.json __fixtures__/nested.file2.json
+
+// gendiff -f plain file1.yml file2.json
+// gendiff -f stylish file1.yml file2.json
+
+// gendiff file1.json file2.json
+// gendiff file1.yml file2.yaml

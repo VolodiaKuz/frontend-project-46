@@ -11,14 +11,7 @@ program
   .option('-f, --format <type>', 'output format')
   .action((filepath1, filepath2, keys) => {
     const format = keys.format;
-    // if (format === 'plain') {
-    //   genDiff(filepath1, filepath2, format);
-    // } else {
-    //   genDiff(filepath1, filepath2)};
     genDiff(filepath1, filepath2, format);
   });
 
-program.parse(process.argv);
-// gendiff __fixtures__/file1.json __fixtures__/file2.json
-// gendiff -f plain __fixtures__/file1.json __fixtures__/file2.json
-// gendiff __fixtures__/file1.yml __fixtures__/file2.yaml
+program.parse();
