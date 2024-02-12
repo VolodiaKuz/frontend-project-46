@@ -5,7 +5,7 @@ import parser from './parsers.js';
 // const file3 = fileReader(pathResolver('flat.result.txt'));
 // console.log(parser(file3, '.json'));
 
-const genDiff = (filepath1, filepath2, format = undefined) => {
+const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const file1 = fileReader(pathResolver(filepath1));
   const file2 = fileReader(pathResolver(filepath2));
 
@@ -19,7 +19,7 @@ const genDiff = (filepath1, filepath2, format = undefined) => {
     console.log('gendiff started with option plain');
     return result;
   }
-  if (format === undefined) {
+  if (format === 'stylish') {
     result += '{';
     for (const key of sortedKeys1) {
       if (Object.hasOwn(obj2, key) && obj1[key] === obj2[key]) {
