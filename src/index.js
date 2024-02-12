@@ -2,9 +2,6 @@
 import { pathResolver, fileReader, checkFileType } from './utils.js';
 import parser from './parsers.js';
 
-// const file3 = fileReader(pathResolver('flat.result.txt'));
-// console.log(parser(file3, '.json'));
-
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const file1 = fileReader(pathResolver(filepath1));
   const file2 = fileReader(pathResolver(filepath2));

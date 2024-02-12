@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 
 export const pathResolver = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-export const fileReader = (file) => fs.readFileSync(path.resolve(file));
+export const fileReader = (file) => fs.readFileSync(path.resolve(file), 'utf-8');
 
 export const checkFileType = (file) => {
   let fileType;
