@@ -48,12 +48,11 @@ export const getDiff = (obj1, obj2) => {
   const union = _.union(keys).sort();
   // console.log(union);
   const obj = union.map((key) => {
-
     if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
       return {
         state: 'nested',
         keyName: key,
-        keyValue: getDiff(obj1[key], obj2[key])
+        keyValue: getDiff(obj1[key], obj2[key]),
       };
     }
 
@@ -89,52 +88,49 @@ export const getDiff = (obj1, obj2) => {
         keyValue: obj1[key],
       };
     }
-
-  })
+    return null;
+  });
   return obj;
-}
+};
 
-export const printDiff = (diffArray, replacer = ' ', spacesCount = 2) => {
-  let result = '\n';
+export const printDiff = (diffArray, replacer = ' ') => {
+  const result = '\n';
   let str = '{\n';
 
   const iter = (node1, depth) => {
     for (const obj of node1.values()) {
       if (obj.state === 'similar') {
-        str += replacer.repeat(depth * 4 - 2) + `  ${obj.keyName}: ${obj.keyValue}\n`
+        str += `${replacer.repeat(depth * 4 - 2)}  ${obj.keyName}: ${obj.keyValue}\n`;
       }
       if (obj.state === 'changed') {
         if (_.isObject(obj.oldValue)) {
-          str += replacer.repeat(depth * 4 - 2) + `- ${obj.keyName}: `;
-          str += printObject(obj.oldValue, depth * 4) + '\n';
-        } else str += replacer.repeat(depth * 4 - 2) + `- ${obj.keyName}: ${obj.oldValue}\n`
+          str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
+          str += `${printObject(obj.oldValue, depth * 4)}\n`;
+        } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.oldValue}\n`;
         if (_.isObject(obj.newValue)) {
-          str += replacer.repeat(depth * 4 - 2) + `- ${obj.keyName}: `;
-          str += printObject(obj.newValue, depth * 4) + '\n';
-        } else str += replacer.repeat(depth * 4 - 2) + `+ ${obj.keyName}: ${obj.newValue}\n`
+          str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
+          str += `${printObject(obj.newValue, depth * 4)}\n`;
+        } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.newValue}\n`;
       }
       if (obj.state === 'deleted') {
         if (_.isObject(obj.keyValue)) {
-          str += replacer.repeat(depth * 4 - 2) + `- ${obj.keyName}: `;
-          str += printObject(obj.keyValue, depth * 4) + '\n';
-        }
-        else str += replacer.repeat(depth * 4 - 2) + `- ${obj.keyName}: ${obj.keyValue}\n`
+          str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
+          str += `${printObject(obj.keyValue, depth * 4)}\n`;
+        } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.keyValue}\n`;
       }
       if (obj.state === 'add') {
         if (_.isObject(obj.keyValue)) {
-          str += replacer.repeat(depth * 4 - 2) + `+ ${obj.keyName}: `;
-          str += printObject(obj.keyValue, depth * 4) + '\n';
-        }
-        else str += replacer.repeat(depth * 4 - 2) + `+ ${obj.keyName}: ${obj.keyValue}\n`
+          str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: `;
+          str += `${printObject(obj.keyValue, depth * 4)}\n`;
+        } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.keyValue}\n`;
       }
       if (obj.state === 'nested') {
-        str += replacer.repeat(depth * 4 - 2) + `  ${obj.keyName}: {\n`
-        // iter(obj.keyValue, depth + 1) + replacer.repeat(depth * 4) + '}\n';
+        str += `${replacer.repeat(depth * 4 - 2)}  ${obj.keyName}: {\n`;
         iter(obj.keyValue, depth + 1);
-        str += replacer.repeat(depth * 4) + '}\n';
+        str += `${replacer.repeat(depth * 4)}}\n`;
       }
     }
     return str;
-  }
-  return result + iter(diffArray, 1) + '}';
-}
+  };
+  return `${result}${iter(diffArray, 1)}}`;
+};

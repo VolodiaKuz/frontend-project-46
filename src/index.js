@@ -1,5 +1,8 @@
 #!/usr/bin/env node
-import { pathResolver, fileReader, checkFileType, printObject, getDiff, printDiff } from './utils.js';
+import {
+  pathResolver, fileReader, checkFileType, getDiff, printDiff,
+}
+  from './utils.js';
 import parser from './parsers.js';
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
