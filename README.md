@@ -29,3 +29,7 @@ Asciinema of gendiff function usage with .yaml format:
 Asciinema of gendiff function usage with nested files:
 <br>
 <a href="https://asciinema.org/a/851RJxxYMdmMYObVl941779V4" target="_blank"><img src="https://asciinema.org/a/851RJxxYMdmMYObVl941779V4.svg" height="150" /></a>
+
+Asciinema of gendiff function usage with nested files with flags:
+<br>
+<a href="https://asciinema.org/a/WYkZmhOD50UUCQE2jFNeCFEg4" target="_blank"><img src="https://asciinema.org/a/WYkZmhOD50UUCQE2jFNeCFEg4.svg" height="150" /></a>
