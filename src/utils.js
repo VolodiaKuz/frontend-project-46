@@ -53,6 +53,7 @@ export const getDiff = (obj1, obj2) => {
         state: 'nested',
         keyName: key,
         keyValue: getDiff(obj1[key], obj2[key]),
+        fullKey: _.findKey(obj1, obj1[key]),
       };
     }
 
@@ -61,6 +62,7 @@ export const getDiff = (obj1, obj2) => {
         state: 'deleted',
         keyName: key,
         keyValue: obj1[key],
+        fullKey: _.findKey(obj1, obj1[key]),
       };
     }
 
@@ -93,41 +95,30 @@ export const getDiff = (obj1, obj2) => {
   return obj;
 };
 
-export const printDiff = (diffArray, replacer = ' ') => {
+export const printDiff = (diffArray) => {
   const result = '\n';
   let str = '{\n';
 
-  const iter = (node1, depth) => {
+  const iter = (node1, depth, name = []) => {
     for (const obj of node1.values()) {
-      if (obj.state === 'similar') {
-        str += `${replacer.repeat(depth * 4 - 2)}  ${obj.keyName}: ${obj.keyValue}\n`;
-      }
       if (obj.state === 'changed') {
-        if (_.isObject(obj.oldValue)) {
-          str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
-          str += `${printObject(obj.oldValue, depth * 4)}\n`;
-        } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.oldValue}\n`;
-        if (_.isObject(obj.newValue)) {
-          str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
-          str += `${printObject(obj.newValue, depth * 4)}\n`;
-        } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.newValue}\n`;
+        const fullPath = name.concat(obj.keyName).join('.');
+        console.log(fullPath);
+        const changedFrom = _.isObject(obj.oldValue) ? '[complex value]' : `'${obj.oldValue}'`;
+        const changedTo = _.isObject(obj.newValue) ? '[complex value]' : `'${obj.newValue}'`;
+        str += `Property ${fullPath} was updated. From ${changedFrom} to ${changedTo}\n`;
       }
       if (obj.state === 'deleted') {
-        if (_.isObject(obj.keyValue)) {
-          str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
-          str += `${printObject(obj.keyValue, depth * 4)}\n`;
-        } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.keyValue}\n`;
+        const fullPath = name.concat(obj.keyName).join('.');
+        str += `Property ${fullPath} was removed\n`;
       }
       if (obj.state === 'add') {
-        if (_.isObject(obj.keyValue)) {
-          str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: `;
-          str += `${printObject(obj.keyValue, depth * 4)}\n`;
-        } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.keyValue}\n`;
+        const fullPath = name.concat(obj.keyName).join('.');
+        const addedValue = _.isObject(obj.keyValue) ? '[complex value]' : `'${obj.keyValue}'`;
+        str += `Property ${fullPath} was added with value: ${addedValue}\n`;
       }
       if (obj.state === 'nested') {
-        str += `${replacer.repeat(depth * 4 - 2)}  ${obj.keyName}: {\n`;
-        iter(obj.keyValue, depth + 1);
-        str += `${replacer.repeat(depth * 4)}}\n`;
+        iter(obj.keyValue, depth + 1, name.concat(obj.keyName));
       }
     }
     return str;
