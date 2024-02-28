@@ -1,41 +1,22 @@
 #!/usr/bin/env node
-import { pathResolver, fileReader, checkFileType } from './utils.js';
+import { pathResolver, fileReader, checkFileType, printObject, getDiff, printDiff } from './utils.js';
 import parser from './parsers.js';
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const file1 = fileReader(pathResolver(filepath1));
   const file2 = fileReader(pathResolver(filepath2));
 
-  const obj1 = parser(file1, checkFileType(filepath1));
-  const obj2 = parser(file2, checkFileType(filepath2));
+  const parsedObj1 = parser(file1, checkFileType(filepath1));
+  const parsedObj2 = parser(file2, checkFileType(filepath2));
+  let result;
 
-  const sortedKeys1 = Object.keys(obj1).sort();
-  const sortedKeys2 = Object.keys(obj2).sort();
-  let result = '\n';
-  if (format === 'plain') {
-    console.log('gendiff started with option plain');
-    return result;
-  }
   if (format === 'stylish') {
-    result += '{';
-    for (const key of sortedKeys1) {
-      if (Object.hasOwn(obj2, key) && obj1[key] === obj2[key]) {
-        result += `\n    ${key}: ${obj1[key]}`;
-      } else if (Object.hasOwn(obj2, key) && obj1[key] !== obj2[key]) {
-        result += `\n  - ${key}: ${obj1[key]}`;
-        result += `\n  + ${key}: ${obj2[key]}`;
-      } else if (!Object.hasOwn(obj2, key)) {
-        result += `\n  - ${key}: ${obj1[key]}`;
-      }
-    }
-    for (const key of sortedKeys2) {
-      if (!Object.hasOwn(obj1, key)) {
-        result += `\n  + ${key}: ${obj2[key]}`;
-      }
-    }
-    result += '\n}';
+    result = printDiff(getDiff(parsedObj1, parsedObj2));
   }
-  console.log(result);
+  if (format === 'plain') {
+    console.log('gendiff with flag plain');
+  }
+  // console.log(result);
   return result;
 };
 
@@ -49,3 +30,6 @@ export default genDiff;
 
 // gendiff file1.json file2.json
 // gendiff file1.yml file2.yaml
+
+// gendiff nested.file1.json nested.file2.json
+// gendiff nested.file1.yaml nested.file2.yaml
