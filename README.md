@@ -12,11 +12,12 @@ Maintainability:
 This is a console utility - "Gendiff" (Difference generator).
 
 ## Installation
-
 ```bash
 make install
 npm link
 ```
+##
+
 Asciinema of gendiff function usage:
 <br>
 <a href="https://asciinema.org/a/AFpCGSWufx56NxdvJt4Y7AEXh" target="_blank"><img src="https://asciinema.org/a/AFpCGSWufx56NxdvJt4Y7AEXh.svg" width="300" height="150" /></a>
@@ -24,3 +25,7 @@ Asciinema of gendiff function usage:
 Asciinema of gendiff function usage with .yaml format:
 <br>
 <a href="https://asciinema.org/a/r61F2X9v3UrwwoF6noJLJ0iiW" target="_blank"><img src="https://asciinema.org/a/r61F2X9v3UrwwoF6noJLJ0iiW.svg" height="150" /></a>
+
+Asciinema of gendiff function usage with nested files:
+<br>
+<a href="https://asciinema.org/a/851RJxxYMdmMYObVl941779V4" target="_blank"><img src="https://asciinema.org/a/851RJxxYMdmMYObVl941779V4.svg" height="150" /></a>
