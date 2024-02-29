@@ -43,6 +43,31 @@ export const printObject = (value, spacesCount = 1) => {
   return iter(value, 1);
 };
 
+export const printObjectWithoutBraces = (value, spacesCount = 1) => {
+  const replacer = ' ';
+  const iter = (currentValue, depth) => {
+    // альтернативный вариант: (typeof currentValue !== 'object' || currentValue === null)
+    if (!_.isObject(currentValue)) {
+      return `${currentValue}`;
+    }
+
+    const indentSize = depth * spacesCount;
+    const currentIndent = replacer.repeat(indentSize + 4);
+    const bracketIndent = replacer.repeat(indentSize);
+    const lines = Object
+      .entries(currentValue)
+      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
+
+    return [
+      '',
+      ...lines,
+      `${bracketIndent}`,
+    ].join('\n');
+  };
+
+  return iter(value, 1);
+};
+
 export const getDiff = (obj1, obj2) => {
   const keys = Object.keys(obj1).concat(Object.keys(obj2));
   const union = _.union(keys).sort();
