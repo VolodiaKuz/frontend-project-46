@@ -10,7 +10,7 @@ const getStylishFormat = (diffArray, replacer = ' ') => {
       if (obj.state === 'similar') {
         str += `${replacer.repeat(depth * 4 - 2)}  ${obj.keyName}: ${obj.keyValue}\n`;
       }
-      if (obj.state === 'changed') {
+      if (obj.state === 'updated') {
         if (_.isObject(obj.oldValue)) {
           str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
           str += `${printObject(obj.oldValue, depth * 4)}\n`;
@@ -20,13 +20,13 @@ const getStylishFormat = (diffArray, replacer = ' ') => {
           str += `${printObject(obj.newValue, depth * 4)}\n`;
         } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.newValue}\n`;
       }
-      if (obj.state === 'deleted') {
+      if (obj.state === 'removed') {
         if (_.isObject(obj.keyValue)) {
           str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
           str += `${printObject(obj.keyValue, depth * 4)}\n`;
         } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.keyValue}\n`;
       }
-      if (obj.state === 'add') {
+      if (obj.state === 'added') {
         if (_.isObject(obj.keyValue)) {
           str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: `;
           str += `${printObject(obj.keyValue, depth * 4)}\n`;

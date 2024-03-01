@@ -4,9 +4,9 @@ const getPlainFormat = (diffArray) => {
   const result = '';
   let str = '';
 
-  const iter = (node1, depth, name = []) => {
+  const iter = (node1, name = []) => {
     for (const obj of node1.values()) {
-      if (obj.state === 'changed') {
+      if (obj.state === 'updated') {
         const fullPath = name.concat(obj.keyName).join('.');
         let changedFrom;
         let changedTo;
@@ -18,11 +18,11 @@ const getPlainFormat = (diffArray) => {
         else changedTo = _.isObject(obj.newValue) ? '[complex value]' : `'${obj.newValue}'`;
         str += `\nProperty '${fullPath}' was updated. From ${changedFrom} to ${changedTo}`;
       }
-      if (obj.state === 'deleted') {
+      if (obj.state === 'removed') {
         const fullPath = name.concat(obj.keyName).join('.');
         str += `\nProperty '${fullPath}' was removed`;
       }
-      if (obj.state === 'add') {
+      if (obj.state === 'added') {
         const fullPath = name.concat(obj.keyName).join('.');
         let addedValue;
         if (typeof obj.keyValue === 'boolean' || obj.keyValue === null) addedValue = obj.keyValue;
@@ -30,11 +30,11 @@ const getPlainFormat = (diffArray) => {
         str += `\nProperty '${fullPath}' was added with value: ${addedValue}`;
       }
       if (obj.state === 'nested') {
-        iter(obj.keyValue, depth + 1, name.concat(obj.keyName));
+        iter(obj.keyValue, name.concat(obj.keyName));
       }
     }
     return str;
   };
-  return `${result}${iter(diffArray, 1)}`;
+  return `${result}${iter(diffArray)}`;
 };
 export default getPlainFormat;

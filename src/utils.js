@@ -84,7 +84,7 @@ export const getDiff = (obj1, obj2) => {
 
     if (!Object.hasOwn(obj2, key)) {
       return {
-        state: 'deleted',
+        state: 'removed',
         keyName: key,
         keyValue: obj1[key],
         fullKey: _.findKey(obj1, obj1[key]),
@@ -93,7 +93,7 @@ export const getDiff = (obj1, obj2) => {
 
     if (!Object.hasOwn(obj1, key)) {
       return {
-        state: 'add',
+        state: 'added',
         keyName: key,
         keyValue: obj2[key],
       };
@@ -101,7 +101,7 @@ export const getDiff = (obj1, obj2) => {
 
     if (obj1[key] !== obj2[key]) {
       return {
-        state: 'changed',
+        state: 'updated',
         keyName: key,
         oldValue: obj1[key],
         newValue: obj2[key],
@@ -126,18 +126,18 @@ export const printDiff = (diffArray) => {
 
   const iter = (node1, depth, name = []) => {
     for (const obj of node1.values()) {
-      if (obj.state === 'changed') {
+      if (obj.state === 'updated') {
         const fullPath = name.concat(obj.keyName).join('.');
         console.log(fullPath);
         const changedFrom = _.isObject(obj.oldValue) ? '[complex value]' : `'${obj.oldValue}'`;
         const changedTo = _.isObject(obj.newValue) ? '[complex value]' : `'${obj.newValue}'`;
         str += `Property ${fullPath} was updated. From ${changedFrom} to ${changedTo}\n`;
       }
-      if (obj.state === 'deleted') {
+      if (obj.state === 'removed') {
         const fullPath = name.concat(obj.keyName).join('.');
         str += `Property ${fullPath} was removed\n`;
       }
-      if (obj.state === 'add') {
+      if (obj.state === 'added') {
         const fullPath = name.concat(obj.keyName).join('.');
         const addedValue = _.isObject(obj.keyValue) ? '[complex value]' : `'${obj.keyValue}'`;
         str += `Property ${fullPath} was added with value: ${addedValue}\n`;
