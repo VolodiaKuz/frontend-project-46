@@ -11,6 +11,7 @@ program
   .option('-f, --format <type>', 'output format', 'stylish')
   .action((filepath1, filepath2, keys) => {
     const format = keys.format;
+    // const { format } = keys.format;
     genDiff(filepath1, filepath2, format);
   });
 
