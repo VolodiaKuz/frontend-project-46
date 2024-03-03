@@ -1,6 +1,6 @@
 import getPlainFormat from './formatter.plain.js';
 import getStylishFormat from './formatter.stylish.js';
-import getJsonFormat from './formatter.json.js';
+// import getJsonFormat from './formatter.json.js';
 
 const getFormattedDiff = (diff, format) => {
   if (format === 'stylish') return getStylishFormat(diff);
