@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { printObject } from '../src/utils.js';
 
 const getStylishFormat = (diffArray, replacer = ' ') => {
-  const result = '\n';
+  const result = '';
   let str = '{\n';
 
   const iter = (node1, depth) => {
