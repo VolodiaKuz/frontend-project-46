@@ -19,10 +19,9 @@ export const fileReader = (file) => fs.readFileSync(file, 'utf-8');
 // export const fileReader = (file) => fs.readFileSync(path.resolve(file), 'utf-8');
 
 export const checkFileType = (file) => {
-  let fileType;
-  if (file.endsWith('.json')) fileType = '.json';
-  if (file.endsWith('.yml') || file.endsWith('.yaml')) fileType = '.yml';
-  return fileType;
+  if (file.endsWith('.json')) return '.json';
+  if (file.endsWith('.yml') || file.endsWith('.yaml')) return '.yml';
+  return null;
 };
 
 export const printObject = (value, spacesCount = 1) => {
@@ -77,7 +76,7 @@ export const printObjectWithoutBraces = (value, spacesCount = 1) => {
 
 export const getDiff = (obj1, obj2) => {
   const keys = Object.keys(obj1).concat(Object.keys(obj2));
-  const union = _.union(keys).sort();
+  const union = _.sortBy(_.union(keys));
   // console.log(union);
   const obj = union.map((key) => {
     if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
@@ -127,35 +126,34 @@ export const getDiff = (obj1, obj2) => {
   return obj;
 };
 
-export const printDiff = (diffArray) => {
-  const result = '\n';
-  let str = '{\n';
+// export const printDiff = (diffArray) => {
+//   const result = '\n';
+//   let str = '{\n';
 
-  const iter = (node1, depth, name = []) => {
-    for (const obj of node1.values()) {
-      if (obj.state === 'updated') {
-        const fullPath = name.concat(obj.keyName).join('.');
-        console.log(fullPath);
-        const changedFrom = _.isObject(obj.oldValue) ? '[complex value]' : `'${obj.oldValue}'`;
-        const changedTo = _.isObject(obj.newValue) ? '[complex value]' : `'${obj.newValue}'`;
-        str += `Property ${fullPath} was updated. From ${changedFrom} to ${changedTo}\n`;
-      }
-      if (obj.state === 'removed') {
-        const fullPath = name.concat(obj.keyName).join('.');
-        str += `Property ${fullPath} was removed\n`;
-      }
-      if (obj.state === 'added') {
-        const fullPath = name.concat(obj.keyName).join('.');
-        const addedValue = _.isObject(obj.keyValue) ? '[complex value]' : `'${obj.keyValue}'`;
-        str += `Property ${fullPath} was added with value: ${addedValue}\n`;
-      }
-      if (obj.state === 'nested') {
-        iter(obj.keyValue, depth + 1, name.concat(obj.keyName));
-      }
-    }
-    return str;
-  };
-  return `${result}${iter(diffArray, 1)}}`;
-};
+//   const iter = (node1, depth, name = []) => {
+//     for (const obj of node1.values()) {
+//       if (obj.state === 'updated') {
+//         const fullPath = name.concat(obj.keyName).join('.');
+//         const changedFrom = _.isObject(obj.oldValue) ? '[complex value]' : `'${obj.oldValue}'`;
+//         const changedTo = _.isObject(obj.newValue) ? '[complex value]' : `'${obj.newValue}'`;
+//         str += `Property ${fullPath} was updated. From ${changedFrom} to ${changedTo}\n`;
+//       }
+//       if (obj.state === 'removed') {
+//         const fullPath = name.concat(obj.keyName).join('.');
+//         str += `Property ${fullPath} was removed\n`;
+//       }
+//       if (obj.state === 'added') {
+//         const fullPath = name.concat(obj.keyName).join('.');
+//         const addedValue = _.isObject(obj.keyValue) ? '[complex value]' : `'${obj.keyValue}'`;
+//         str += `Property ${fullPath} was added with value: ${addedValue}\n`;
+//       }
+//       if (obj.state === 'nested') {
+//         iter(obj.keyValue, depth + 1, name.concat(obj.keyName));
+//       }
+//     }
+//     return str;
+//   };
+//   return `${result}${iter(diffArray, 1)}}`;
+// };
 
 export const getAbsolutePath = (filePath) => path.resolve(filePath);
