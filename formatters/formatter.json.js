@@ -30,6 +30,7 @@ const getObjFromDiff = (diffArray) => {
         str += `${replacer.repeat(depth)}\n`;
       }
     }
+    console.log(str);
     return str;
   };
   return `${result}${iter(diffArray, 1)}`;
