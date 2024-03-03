@@ -16,7 +16,7 @@ const getStylishFormat = (diffArray, replacer = ' ') => {
           str += `${printObject(obj.oldValue, depth * 4)}\n`;
         } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.oldValue}\n`;
         if (_.isObject(obj.newValue)) {
-          str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `; // возможно здесь должен быть плюс
+          str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: `; // возможно здесь должен быть плюс
           str += `${printObject(obj.newValue, depth * 4)}\n`;
         } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.newValue}\n`;
       }
