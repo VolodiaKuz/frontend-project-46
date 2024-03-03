@@ -7,7 +7,13 @@ import _ from 'lodash';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export const pathResolver = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+export const pathResolver = (filename) => {
+  if (filename.includes('__fixtures__')) {
+    return path.join(__dirname, '..', filename);
+  }
+  const resultPath = path.join(__dirname, '..', '__fixtures__', filename);
+  return resultPath;
+};
 
 export const fileReader = (file) => fs.readFileSync(path.resolve(file), 'utf-8');
 
