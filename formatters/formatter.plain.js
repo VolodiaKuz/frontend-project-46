@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const check = (value) => {
   if (_.isObject(value)) return '[complex value]';
-  if (typeof value === 'boolean' || value === null) return value;
+  if (typeof value === 'boolean' || value === null || typeof value === 'number') return value;
   return `'${value}'`;
 };
 
