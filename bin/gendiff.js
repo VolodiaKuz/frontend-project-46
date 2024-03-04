@@ -9,10 +9,8 @@ program
   .argument('<filepath1>', 'path to first file')
   .argument('<filepath2>', 'path to second file')
   .option('-f, --format <type>', 'output format', 'stylish')
-  .action((filepath1, filepath2, keys) => {
-    const format = keys.format;
-    // const { format } = keys.format;
-    genDiff(filepath1, filepath2, format);
+  .action((filepath1, filepath2) => {
+    genDiff(filepath1, filepath2, program.opts().format);
   });
 
 program.parse();

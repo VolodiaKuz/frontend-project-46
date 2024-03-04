@@ -8,10 +8,9 @@ parserOptions:
   sourceType: module
 rules:
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }] # разрешает подчёркивание в именах только для двух констант
-  prefer-destructuring: 0
+  # prefer-destructuring: 0
   no-console: 0
   no-restricted-syntax: 0
-  fp/no-mutation: 1
   import/extensions:
     - error
     - ignorePackages

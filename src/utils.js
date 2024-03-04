@@ -49,30 +49,30 @@ export const printObject = (value, spacesCount = 1) => {
   return iter(value, 1);
 };
 
-export const printObjectWithoutBraces = (value, spacesCount = 1) => {
-  const replacer = ' ';
-  const iter = (currentValue, depth) => {
-    // альтернативный вариант: (typeof currentValue !== 'object' || currentValue === null)
-    if (!_.isObject(currentValue)) {
-      return `${currentValue}`;
-    }
+// export const printObjectWithoutBraces = (value, spacesCount = 1) => {
+//   const replacer = ' ';
+//   const iter = (currentValue, depth) => {
+//     // альтернативный вариант: (typeof currentValue !== 'object' || currentValue === null)
+//     if (!_.isObject(currentValue)) {
+//       return `${currentValue}`;
+//     }
 
-    const indentSize = depth * spacesCount;
-    const currentIndent = replacer.repeat(indentSize + 4);
-    const bracketIndent = replacer.repeat(indentSize);
-    const lines = Object
-      .entries(currentValue)
-      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
+//     const indentSize = depth * spacesCount;
+//     const currentIndent = replacer.repeat(indentSize + 4);
+//     const bracketIndent = replacer.repeat(indentSize);
+//     const lines = Object
+//       .entries(currentValue)
+//       .map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
 
-    return [
-      '',
-      ...lines,
-      `${bracketIndent}`,
-    ].join('\n');
-  };
+//     return [
+//       '',
+//       ...lines,
+//       `${bracketIndent}`,
+//     ].join('\n');
+//   };
 
-  return iter(value, 1);
-};
+//   return iter(value, 1);
+// };
 
 export const getDiff = (obj1, obj2) => {
   const keys = Object.keys(obj1).concat(Object.keys(obj2));
@@ -84,7 +84,6 @@ export const getDiff = (obj1, obj2) => {
         state: 'nested',
         keyName: key,
         keyValue: getDiff(obj1[key], obj2[key]),
-        fullKey: _.findKey(obj1, obj1[key]),
       };
     }
 
@@ -93,7 +92,6 @@ export const getDiff = (obj1, obj2) => {
         state: 'removed',
         keyName: key,
         keyValue: obj1[key],
-        fullKey: _.findKey(obj1, obj1[key]),
       };
     }
 
