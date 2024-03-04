@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const check = (value) => {
   if (_.isObject(value)) return '[complex value]';
-  if (typeof value === 'boolean' || value === null) return value;
+  if (typeof value === 'boolean' || value === null || typeof value === 'number') return value;
   return `'${value}'`;
 };
 
@@ -44,14 +44,11 @@ const getPlainFormat1 = (diffArray, name = []) => {
 };
 
 const getPlainFormat = (arr) => {
-  const result = getPlainFormat1(arr);
-  const resultArr = [];
-  result.forEach((obj) => {
-    if (obj !== null) {
-      resultArr.push(obj.string);
-    }
-  });
-  return resultArr.join('\n');
+  const objectWithPlainStrings = getPlainFormat1(arr);
+  const result = objectWithPlainStrings
+    .filter((el) => el !== null)
+    .map((el) => el.string);
+  return result.join('\n');
 };
 
 export default getPlainFormat;
