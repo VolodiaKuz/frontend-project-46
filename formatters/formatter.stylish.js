@@ -41,6 +41,7 @@ const getStylishFormat = (diff) => {
       if (singleNode.state === 'nested') {
         return `${currentIndent}${singleNode.keyName}: ${iter(singleNode.keyValue, depth + 1)}`;
       }
+      return null;
     });
 
     return `{\n${lines.join('\n')}\n${closedBracketIndent}}`;

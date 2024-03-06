@@ -17,7 +17,7 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
 
   // console.log(JSON.stringify(getDiff(parsedObj1, parsedObj2), null, 2));
   const result = getFormattedDiff(getDiff(parsedObj1, parsedObj2), format);
-  // console.log(result);
+  console.log(result);
   return result;
 };
 
