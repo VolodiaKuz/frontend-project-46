@@ -1,115 +1,52 @@
-import _ from 'lodash';
-import { printObject } from '../src/utils.js';
+const makeIndent = (depth, closedBrackets = false, repeater = ' ', spaceCount = 4) => {
+  if (closedBrackets) return repeater.repeat(spaceCount * (depth - 1));
+  return repeater.repeat(spaceCount * depth);
+};
 
-// const getStylishFormat = (diffArray, replacer = ' ') => {
-//   const result = '';
-//   let str = '{\n';
+const printValue = (keyValue, depth) => {
+  if (typeof keyValue === 'object' && keyValue !== null) {
+    const currentIndent = makeIndent(depth);
+    const currentClosedBrackerIndent = makeIndent(depth, true);
 
-//   const iter = (node1, depth) => {
-//     console.log(node1);
-//     for (const obj of node1.values()) {
-//       if (obj.state === 'similar') {
-//         str += `${replacer.repeat(depth * 4 - 2)}  ${obj.keyName}: ${obj.keyValue}\n`;
-//       }
-//       if (obj.state === 'updated') {
-//         if (_.isObject(obj.oldValue)) {
-//           str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
-//           str += `${printObject(obj.oldValue, depth * 4)}\n`;
-//         } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.oldValue}\n`;
-//         if (_.isObject(obj.newValue)) {
-//           str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: `; // возможно здесь должен быть плюс
-//           str += `${printObject(obj.newValue, depth * 4)}\n`;
-//         } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.newValue}\n`;
-//       }
-//       if (obj.state === 'removed') {
-//         if (_.isObject(obj.keyValue)) {
-//           str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
-//           str += `${printObject(obj.keyValue, depth * 4)}\n`;
-//         } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.keyValue}\n`;
-//       }
-//       if (obj.state === 'added') {
-//         if (_.isObject(obj.keyValue)) {
-//           str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: `;
-//           str += `${printObject(obj.keyValue, depth * 4)}\n`;
-//         } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.keyValue}\n`;
-//       }
-//       if (obj.state === 'nested') {
-//         str += `${replacer.repeat(depth * 4 - 2)}  ${obj.keyName}: {\n`;
-//         iter(obj.keyValue, depth + 1);
-//         str += `${replacer.repeat(depth * 4)}}\n`;
-//       }
-//     }
-//     return str;
-//   };
-//   return `${result}${iter(diffArray, 1)}}`;
-// };
+    const lines = Object.entries(keyValue).map(([keyName, value]) => {
+      const resultString = `${currentIndent}${keyName}: ${printValue(value, depth + 1)}`;
+      return resultString;
+    });
+    return `{\n${lines.join('\n')}\n${currentClosedBrackerIndent}}`;
+  }
 
-const getFormattedArray = (diff, depth = 1) => {
-  const replacer = ' ';
-  const result = diff.flatMap((obj) => {
-
-    if (obj.state === 'similar') {
-      const str = `${replacer.repeat(depth * 4 - 2)}  ${obj.keyName}: ${obj.keyValue}\n`;
-      return {
-        str,
-        depth,
-      };
-    }
-    if (obj.state === 'updated') {
-      let str = '';
-      if (_.isObject(obj.oldValue)) {
-        str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
-        str += `${printObject(obj.oldValue, depth * 4)}\n`;
-      } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.oldValue}\n`;
-      if (_.isObject(obj.newValue)) {
-        str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: `; // возможно здесь должен быть плюс
-        str += `${printObject(obj.newValue, depth * 4)}\n`;
-      } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.newValue}\n`;
-      return {
-        str,
-        depth,
-      };
-    }
-    if (obj.state === 'removed') {
-      let str = '';
-      if (_.isObject(obj.keyValue)) {
-        str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: `;
-        str += `${printObject(obj.keyValue, depth * 4)}\n`;
-      } else str += `${replacer.repeat(depth * 4 - 2)}- ${obj.keyName}: ${obj.keyValue}\n`;
-      return {
-        str,
-        depth,
-      };
-    }
-    if (obj.state === 'added') {
-      let str = '';
-      if (_.isObject(obj.keyValue)) {
-        str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: `;
-        str += `${printObject(obj.keyValue, depth * 4)}\n`;
-      } else str += `${replacer.repeat(depth * 4 - 2)}+ ${obj.keyName}: ${obj.keyValue}\n`;
-      return {
-        str,
-        depth,
-      };
-    }
-    if (obj.state === 'nested') {
-      let str = '';
-      str += `${replacer.repeat(depth * 4 - 2)}  ${obj.keyName}: {\n`;
-      const obj2 = {
-        str,
-        depth,
-      };
-      return getFormattedArray(obj.keyValue, depth + 1);
-    }
-    return null;
-  });
-  return result;
-}
+  return `${keyValue}`;
+};
 
 const getStylishFormat = (diff) => {
-  const result = getFormattedArray(diff);
-  console.log(result);
-  const result2 = result.map((el) => el.str);
-  return result2.join('');
-}
+  const iter = (node, depth = 1, repeater = ' ', spaceCount = 4) => {
+    const currentIndent = repeater.repeat(spaceCount * depth);
+    const closedBracketIndent = repeater.repeat(spaceCount * (depth - 1));
+
+    const lines = node.map((singleNode) => {
+      if (singleNode.state === 'added') {
+        return `${currentIndent.slice(2)}+ ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
+      }
+      if (singleNode.state === 'similar') {
+        return `${currentIndent.slice(2)}  ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
+      }
+      if (singleNode.state === 'removed') {
+        return `${currentIndent.slice(2)}- ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
+      }
+      if (singleNode.state === 'updated') {
+        const str1 = `${currentIndent.slice(2)}- ${singleNode.keyName}: ${printValue(singleNode.oldValue, depth + 1)}\n`;
+        const str2 = `${currentIndent.slice(2)}+ ${singleNode.keyName}: ${printValue(singleNode.newValue, depth + 1)}`;
+        return str1 + str2;
+      }
+      if (singleNode.state === 'nested') {
+        return `${currentIndent}${singleNode.keyName}: ${iter(singleNode.keyValue, depth + 1)}`;
+      }
+    });
+
+    return `{\n${lines.join('\n')}\n${closedBracketIndent}}`;
+  };
+
+  return iter(diff, 1);
+};
+
 export default getStylishFormat;
