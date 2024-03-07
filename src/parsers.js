@@ -1,6 +1,6 @@
 import * as yaml from 'js-yaml';
 
-const parser = (file, fileType) => {
+const getParsedFile = (file, fileType) => {
   if (fileType === '.json') {
     return JSON.parse(file);
   }
@@ -9,4 +9,4 @@ const parser = (file, fileType) => {
   }
   return null;
 };
-export default parser;
+export default getParsedFile;
