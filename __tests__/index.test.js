@@ -2,9 +2,12 @@ import * as fs from 'node:fs';
 import genDiff from '../src/index.js';
 import { pathResolver } from '../src/utils.js';
 
+const json1 = '__fixtures__/nested.file1.json';
+const json2 = '__fixtures__/nested.file2.json';
+
 test('nested files with with .json format and stylish flag', () => {
   const nestedResultStylish = fs.readFileSync(pathResolver('nested.result.stylish.txt'), 'utf-8');
-  expect(genDiff('__fixtures__/nested.file1.json', '__fixtures__/nested.file2.json')).toEqual(nestedResultStylish);
+  expect(genDiff(json1, json2)).toEqual(nestedResultStylish);
 });
 
 test('nested files with with .yaml format and stylish flag', () => {
@@ -14,7 +17,7 @@ test('nested files with with .yaml format and stylish flag', () => {
 
 test('nested files with with .json format and plain flag', () => {
   const nestedResultPlain = fs.readFileSync(pathResolver('nested.result.plain.txt'), 'utf-8');
-  expect(genDiff('__fixtures__/nested.file1.json', '__fixtures__/nested.file2.json', 'plain')).toEqual(nestedResultPlain);
+  expect(genDiff(json1, json2, 'plain')).toEqual(nestedResultPlain);
 });
 
 test('nested files with with .yaml format and plain flag', () => {
@@ -24,7 +27,7 @@ test('nested files with with .yaml format and plain flag', () => {
 
 test('nested files with with .json format and json flag', () => {
   const nestedResultJson = fs.readFileSync(pathResolver('nested.result.json.txt'), 'utf-8');
-  expect(genDiff('__fixtures__/nested.file1.json', '__fixtures__/nested.file2.json', 'json')).toEqual(nestedResultJson);
+  expect(genDiff(json1, json2, 'json')).toEqual(nestedResultJson);
 });
 
 test('nested files with with .yaml format and json flag', () => {

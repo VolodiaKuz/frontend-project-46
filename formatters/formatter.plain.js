@@ -6,10 +6,10 @@ const getValueType = (value) => {
   return `'${value}'`;
 };
 
-const getFormattedArray = (diffArray, name = []) => {
+const getPlainDiff = (diffArray, name = []) => {
   const result = diffArray.flatMap((obj) => {
     if (obj.state === 'nested') {
-      return getFormattedArray(obj.keyValue, name.concat(obj.keyName));
+      return getPlainDiff(obj.keyValue, name.concat(obj.keyName));
     }
     if (obj.state === 'updated') {
       const fullPath = name.concat(obj.keyName).join('.');
@@ -44,7 +44,7 @@ const getFormattedArray = (diffArray, name = []) => {
 };
 
 const getPlainFormat = (arr) => {
-  const objectWithPlainStrings = getFormattedArray(arr);
+  const objectWithPlainStrings = getPlainDiff(arr);
   const result = objectWithPlainStrings
     .filter((el) => el !== null)
     .map((el) => el.string);

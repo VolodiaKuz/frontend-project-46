@@ -22,7 +22,6 @@ const getStylishFormat = (diff) => {
   const iter = (node, depth = 1, repeater = ' ', spaceCount = 4) => {
     const currentIndent = repeater.repeat(spaceCount * depth);
     const closedBracketIndent = repeater.repeat(spaceCount * (depth - 1));
-
     const lines = node.map((singleNode) => {
       if (singleNode.state === 'added') {
         return `${currentIndent.slice(2)}+ ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
