@@ -4,6 +4,7 @@ import { pathResolver } from '../src/utils.js';
 
 const json1 = '__fixtures__/nested.file1.json';
 const json2 = '__fixtures__/nested.file2.json';
+const yaml1 = '__fixtures__/nested.file1.yaml';
 
 test('nested files with with .json format and stylish flag', () => {
   const nestedResultStylish = fs.readFileSync(pathResolver('nested.result.stylish.txt'), 'utf-8');
@@ -12,7 +13,7 @@ test('nested files with with .json format and stylish flag', () => {
 
 test('nested files with with .yaml format and stylish flag', () => {
   const nestedResultStylish = fs.readFileSync(pathResolver('nested.result.stylish.txt'), 'utf-8');
-  expect(genDiff('__fixtures__/nested.file1.yaml', '__fixtures__/nested.file2.yml', 'stylish')).toEqual(nestedResultStylish);
+  expect(genDiff(yaml1, '__fixtures__/nested.file2.yml', 'stylish')).toEqual(nestedResultStylish);
 });
 
 test('nested files with with .json format and plain flag', () => {
