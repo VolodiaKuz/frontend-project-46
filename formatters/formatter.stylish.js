@@ -23,6 +23,7 @@ const getStylishFormat = (diff) => {
     const currentIndent = repeater.repeat(spaceCount * depth);
     const closedBracketIndent = repeater.repeat(spaceCount * (depth - 1));
     const lines = node.map((singleNode) => {
+      // const currentIndent = currentIndent1.slice(2);
       if (singleNode.state === 'added') {
         return `${currentIndent.slice(2)}+ ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
       }
