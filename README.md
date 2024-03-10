@@ -9,7 +9,9 @@ Maintainability:
 
 ## About
 
-This is a console utility - "Gendiff" (Difference generator).
+This is a console utility - "Gendiff" (Difference generator). The utility compares two files and prints the differnce between them. Supported types of files for comparing: .json, .yaml. The user can choose 3 types of flags for result printing such as: "stylish", "plain" and "json".
+<br>
+
 
 ## Installation
 ```bash
@@ -17,6 +19,11 @@ make install
 npm link
 ```
 ##
+
+## Example of using
+```bash
+gendiff -f stylish file1.yml file2.json
+```
 
 Asciinema of gendiff function usage:
 <br>
