@@ -19,23 +19,23 @@ const printValue = (keyValue, depth) => {
 };
 
 const getStylishFormat = (diff) => {
-  const iter = (node, depth = 1, repeater = ' ', spaceCount = 4) => {
-    const currentIndent = repeater.repeat(spaceCount * depth);
-    const closedBracketIndent = repeater.repeat(spaceCount * (depth - 1));
+  const iter = (node, depth = 1) => {
+    const currentIndent = makeIndent(depth);
+    const closedBracketIndent = makeIndent(depth, true);
     const lines = node.map((singleNode) => {
-      // const currentIndent = currentIndent1.slice(2);
+      const mappedCurrentIndent = currentIndent.slice(2);
       if (singleNode.state === 'added') {
-        return `${currentIndent.slice(2)}+ ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
+        return `${mappedCurrentIndent}+ ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
       }
       if (singleNode.state === 'similar') {
-        return `${currentIndent.slice(2)}  ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
+        return `${mappedCurrentIndent}  ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
       }
       if (singleNode.state === 'removed') {
-        return `${currentIndent.slice(2)}- ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
+        return `${mappedCurrentIndent}- ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
       }
       if (singleNode.state === 'updated') {
-        const str1 = `${currentIndent.slice(2)}- ${singleNode.keyName}: ${printValue(singleNode.oldValue, depth + 1)}\n`;
-        const str2 = `${currentIndent.slice(2)}+ ${singleNode.keyName}: ${printValue(singleNode.newValue, depth + 1)}`;
+        const str1 = `${mappedCurrentIndent}- ${singleNode.keyName}: ${printValue(singleNode.oldValue, depth + 1)}\n`;
+        const str2 = `${mappedCurrentIndent}+ ${singleNode.keyName}: ${printValue(singleNode.newValue, depth + 1)}`;
         return str1 + str2;
       }
       if (singleNode.state === 'nested') {
@@ -43,10 +43,8 @@ const getStylishFormat = (diff) => {
       }
       return null;
     });
-
     return `{\n${lines.join('\n')}\n${closedBracketIndent}}`;
   };
-
   return iter(diff, 1);
 };
 
