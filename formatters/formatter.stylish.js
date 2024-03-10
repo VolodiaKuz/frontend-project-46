@@ -18,31 +18,35 @@ const printValue = (keyValue, depth) => {
   return `${keyValue}`;
 };
 
+const getDiffStr = (node, depth, indent) => {
+  const diffString = `${node.keyName}: ${printValue(node.keyValue, depth + 1)}`;
+  if (node.state === 'added') {
+    return `${indent}+ ${diffString}`;
+  }
+  if (node.state === 'similar') {
+    return `${indent}  ${diffString}`;
+  }
+  if (node.state === 'removed') {
+    return `${indent}- ${diffString}`;
+  }
+  if (node.state === 'updated') {
+    const removedStr = `${indent}- ${node.keyName}: ${printValue(node.oldValue, depth + 1)}\n`;
+    const addedStr = `${indent}+ ${node.keyName}: ${printValue(node.newValue, depth + 1)}`;
+    return removedStr + addedStr;
+  }
+  return null;
+};
+
 const getStylishFormat = (diff) => {
   const iter = (node, depth = 1) => {
     const currentIndent = makeIndent(depth);
     const closedBracketIndent = makeIndent(depth, true);
     const lines = node.map((singleNode) => {
       const mappedCurrentIndent = currentIndent.slice(2);
-      const diffString = `${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
-      if (singleNode.state === 'added') {
-        return `${mappedCurrentIndent}+ ${diffString}`;
-      }
-      if (singleNode.state === 'similar') {
-        return `${mappedCurrentIndent}  ${diffString}`;
-      }
-      if (singleNode.state === 'removed') {
-        return `${mappedCurrentIndent}- ${diffString}`;
-      }
-      if (singleNode.state === 'updated') {
-        const removedStr = `${mappedCurrentIndent}- ${singleNode.keyName}: ${printValue(singleNode.oldValue, depth + 1)}\n`;
-        const addedStr = `${mappedCurrentIndent}+ ${singleNode.keyName}: ${printValue(singleNode.newValue, depth + 1)}`;
-        return removedStr + addedStr;
-      }
       if (singleNode.state === 'nested') {
         return `${currentIndent}${singleNode.keyName}: ${iter(singleNode.keyValue, depth + 1)}`;
       }
-      return null;
+      return getDiffStr(singleNode, depth, mappedCurrentIndent);
     });
     return `{\n${lines.join('\n')}\n${closedBracketIndent}}`;
   };
