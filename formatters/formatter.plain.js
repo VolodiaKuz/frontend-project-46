@@ -7,26 +7,25 @@ const getValueType = (value) => {
 };
 
 const getDiffString = (obj, name) => {
-  const resultObject = {};
   if (obj.state === 'updated') {
     const fullPath = name.concat(obj.keyName).join('.');
     const oldValue = getValueType(obj.oldValue);
     const newValue = getValueType(obj.newValue);
     const str = `Property '${fullPath}' was updated. From ${oldValue} to ${newValue}`;
-    resultObject.string = str;
+    return { string: str };
   }
   if (obj.state === 'removed') {
     const fullPath = name.concat(obj.keyName).join('.');
     const str = `Property '${fullPath}' was removed`;
-    resultObject.string = str;
+    return { string: str };
   }
   if (obj.state === 'added') {
     const fullPath = name.concat(obj.keyName).join('.');
     const addedValue = getValueType(obj.keyValue);
     const str = `Property '${fullPath}' was added with value: ${addedValue}`;
-    resultObject.string = str;
+    return { string: str };
   }
-  return resultObject;
+  return {};
 };
 
 const getPlainDiff = (diffArray, name = []) => {
