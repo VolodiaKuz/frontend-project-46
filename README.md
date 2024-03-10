@@ -24,6 +24,7 @@ npm link
 ```bash
 gendiff -f stylish file1.yml file2.json
 ```
+##
 
 Asciinema of gendiff function usage:
 <br>
