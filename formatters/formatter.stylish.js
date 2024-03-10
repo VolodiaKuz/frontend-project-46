@@ -24,19 +24,20 @@ const getStylishFormat = (diff) => {
     const closedBracketIndent = makeIndent(depth, true);
     const lines = node.map((singleNode) => {
       const mappedCurrentIndent = currentIndent.slice(2);
+      const diffString = `${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
       if (singleNode.state === 'added') {
-        return `${mappedCurrentIndent}+ ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
+        return `${mappedCurrentIndent}+ ${diffString}`;
       }
       if (singleNode.state === 'similar') {
-        return `${mappedCurrentIndent}  ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
+        return `${mappedCurrentIndent}  ${diffString}`;
       }
       if (singleNode.state === 'removed') {
-        return `${mappedCurrentIndent}- ${singleNode.keyName}: ${printValue(singleNode.keyValue, depth + 1)}`;
+        return `${mappedCurrentIndent}- ${diffString}`;
       }
       if (singleNode.state === 'updated') {
-        const str1 = `${mappedCurrentIndent}- ${singleNode.keyName}: ${printValue(singleNode.oldValue, depth + 1)}\n`;
-        const str2 = `${mappedCurrentIndent}+ ${singleNode.keyName}: ${printValue(singleNode.newValue, depth + 1)}`;
-        return str1 + str2;
+        const removedStr = `${mappedCurrentIndent}- ${singleNode.keyName}: ${printValue(singleNode.oldValue, depth + 1)}\n`;
+        const addedStr = `${mappedCurrentIndent}+ ${singleNode.keyName}: ${printValue(singleNode.newValue, depth + 1)}`;
+        return removedStr + addedStr;
       }
       if (singleNode.state === 'nested') {
         return `${currentIndent}${singleNode.keyName}: ${iter(singleNode.keyValue, depth + 1)}`;
