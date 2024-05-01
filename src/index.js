@@ -4,7 +4,7 @@ import {
 }
   from './utils.js';
 import getParsedFile from './parsers.js';
-import getFormattedDiff from '../src/formatters/index.js';
+import getFormattedDiff from '../formatters/index.js';
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const file1 = readFile(getAbsolutePath(filepath1));
