@@ -15,6 +15,8 @@ This is a console utility - "Gendiff" (Difference generator). The utility compar
 
 ## Installation
 ```bash
+git clone https://github.com/VolodiaKuz/frontend-project-46.git
+cd frontend-project-46
 make install
 npm link
 ```
