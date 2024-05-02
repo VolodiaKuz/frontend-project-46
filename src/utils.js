@@ -14,12 +14,6 @@ export const pathResolver = (filename) => {
   return resultPath;
 };
 
-export const checkFileType = (file) => {
-  if (file.endsWith('.json')) return '.json';
-  if (file.endsWith('.yml') || file.endsWith('.yaml')) return '.yml';
-  return null;
-};
-
 export const getDiff = (obj1, obj2) => {
   const keys = Object.keys(obj1).concat(Object.keys(obj2));
   const union = _.sortBy(_.union(keys));
