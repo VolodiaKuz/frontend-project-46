@@ -1,4 +1,3 @@
-import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -14,8 +13,6 @@ export const pathResolver = (filename) => {
   const resultPath = path.join(__dirname, '..', '__fixtures__', filename);
   return resultPath;
 };
-
-export const readFile = (file) => fs.readFileSync(file, 'utf-8');
 
 export const checkFileType = (file) => {
   if (file.endsWith('.json')) return '.json';
