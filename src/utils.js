@@ -17,7 +17,6 @@ export const pathResolver = (filename) => {
 export const getDiff = (obj1, obj2) => {
   const keys = Object.keys(obj1).concat(Object.keys(obj2));
   const union = _.sortBy(_.union(keys));
-  // console.log(union);
   const obj = union.map((key) => {
     if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
       return {

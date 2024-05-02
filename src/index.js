@@ -6,8 +6,6 @@ import getParsedFile from './parsers.js';
 import getFormattedDiff from './formatters/index.js';
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
-  // const file1 = readFile(getAbsolutePath(filepath1));
-  // const file2 = readFile(getAbsolutePath(filepath2));
   const file1 = fs.readFileSync(filepath1, 'utf-8');
   const file2 = fs.readFileSync(filepath2, 'utf-8');
   const parsedObj1 = getParsedFile(file1, path.extname(filepath1));
