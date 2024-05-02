@@ -1,12 +1,15 @@
 import * as yaml from 'js-yaml';
 
 const getParsedFile = (file, fileType) => {
-  if (fileType === '.json') {
-    return JSON.parse(file);
+  switch (fileType) {
+    case '.json':
+      return JSON.parse(file);
+    case '.yml':
+      return yaml.load(file);
+    case '.yaml':
+      return yaml.load(file);
+    default:
+      throw new Error(`Invalid extension - ${fileType}`);
   }
-  if (fileType === '.yml' || fileType === '.yaml') {
-    return yaml.load(file);
-  }
-  return null;
 };
 export default getParsedFile;
