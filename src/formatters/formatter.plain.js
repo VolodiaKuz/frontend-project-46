@@ -7,7 +7,7 @@ const getValueType = (value) => {
 };
 
 const getDiffString = (obj, name) => {
-  const fullPath = name.concat(obj.keyName).join('.');
+  const fullPath = name.concat(obj.key).join('.');
   switch (obj.state) {
     case 'updated': {
       const oldValue = getValueType(obj.oldValue);
@@ -17,7 +17,7 @@ const getDiffString = (obj, name) => {
     case 'removed':
       return { string: `Property '${fullPath}' was removed` };
     case 'added': {
-      const addedValue = getValueType(obj.keyValue);
+      const addedValue = getValueType(obj.value);
       return { string: `Property '${fullPath}' was added with value: ${addedValue}` };
     }
     default:
@@ -28,7 +28,7 @@ const getDiffString = (obj, name) => {
 const getPlainDiff = (diffArray, name = []) => {
   const result = diffArray.flatMap((diffObject) => {
     if (diffObject.state === 'nested') {
-      return getPlainDiff(diffObject.keyValue, name.concat(diffObject.keyName));
+      return getPlainDiff(diffObject.value, name.concat(diffObject.key));
     }
     return getDiffString(diffObject, name);
   });
