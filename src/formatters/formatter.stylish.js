@@ -8,10 +8,7 @@ const printValue = (keyValue, depth) => {
     const currentIndent = makeIndent(depth);
     const currentClosedBrackerIndent = makeIndent(depth, true);
 
-    const lines = Object.entries(keyValue).map(([keyName, value]) => {
-      const resultString = `${currentIndent}${keyName}: ${printValue(value, depth + 1)}`;
-      return resultString;
-    });
+    const lines = Object.entries(keyValue).map(([keyName, value]) => `${currentIndent}${keyName}: ${printValue(value, depth + 1)}`);
     return `{\n${lines.join('\n')}\n${currentClosedBrackerIndent}}`;
   }
 
