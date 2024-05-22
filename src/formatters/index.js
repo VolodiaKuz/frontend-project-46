@@ -2,9 +2,15 @@ import getPlainFormat from './formatter.plain.js';
 import getStylishFormat from './formatter.stylish.js';
 
 const getFormattedDiff = (diff, format) => {
-  if (format === 'stylish') return getStylishFormat(diff);
-  if (format === 'plain') return getPlainFormat(diff);
-  if (format === 'json') return JSON.stringify(getStylishFormat(diff));
-  return null;
+  switch (format) {
+    case 'stylish':
+      return getStylishFormat(diff);
+    case 'plain':
+      return getPlainFormat(diff);
+    case 'json':
+      return JSON.stringify(getStylishFormat(diff));
+    default:
+      throw new Error(`Invalid format - ${format}`);
+  }
 };
 export default getFormattedDiff;
