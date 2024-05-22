@@ -7,25 +7,22 @@ const getValueType = (value) => {
 };
 
 const getDiffString = (obj, name) => {
-  if (obj.state === 'updated') {
-    const fullPath = name.concat(obj.keyName).join('.');
-    const oldValue = getValueType(obj.oldValue);
-    const newValue = getValueType(obj.newValue);
-    const str = `Property '${fullPath}' was updated. From ${oldValue} to ${newValue}`;
-    return { string: str };
+  const fullPath = name.concat(obj.keyName).join('.');
+  switch (obj.state) {
+    case 'updated': {
+      const oldValue = getValueType(obj.oldValue);
+      const newValue = getValueType(obj.newValue);
+      return { string: `Property '${fullPath}' was updated. From ${oldValue} to ${newValue}` };
+    }
+    case 'removed':
+      return { string: `Property '${fullPath}' was removed` };
+    case 'added': {
+      const addedValue = getValueType(obj.keyValue);
+      return { string: `Property '${fullPath}' was added with value: ${addedValue}` };
+    }
+    default:
+      return {};
   }
-  if (obj.state === 'removed') {
-    const fullPath = name.concat(obj.keyName).join('.');
-    const str = `Property '${fullPath}' was removed`;
-    return { string: str };
-  }
-  if (obj.state === 'added') {
-    const fullPath = name.concat(obj.keyName).join('.');
-    const addedValue = getValueType(obj.keyValue);
-    const str = `Property '${fullPath}' was added with value: ${addedValue}`;
-    return { string: str };
-  }
-  return {};
 };
 
 const getPlainDiff = (diffArray, name = []) => {
