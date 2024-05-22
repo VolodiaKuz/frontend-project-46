@@ -20,8 +20,7 @@ export const getDiff = (obj1, obj2) => {
       };
     }
 
-    if (obj1[key] === obj2[key]) return { state: 'similar', key, value: obj1[key] };
-    return null;
+    return { state: 'similar', key, value: obj1[key] };
   });
   return obj;
 };
