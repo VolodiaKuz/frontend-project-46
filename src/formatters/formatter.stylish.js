@@ -17,21 +17,21 @@ const printValue = (keyValue, depth) => {
 
 const getDiffStr = (node, depth, indent) => {
   const diffString = `${node.keyName}: ${printValue(node.keyValue, depth + 1)}`;
-  if (node.state === 'added') {
-    return `${indent}+ ${diffString}`;
+  switch (node.state) {
+    case 'added':
+      return `${indent}+ ${diffString}`;
+    case 'similar':
+      return `${indent}  ${diffString}`;
+    case 'removed':
+      return `${indent}- ${diffString}`;
+    case 'updated': {
+      const removedStr = `${indent}- ${node.keyName}: ${printValue(node.oldValue, depth + 1)}\n`;
+      const addedStr = `${indent}+ ${node.keyName}: ${printValue(node.newValue, depth + 1)}`;
+      return removedStr + addedStr;
+    }
+    default:
+      return null;
   }
-  if (node.state === 'similar') {
-    return `${indent}  ${diffString}`;
-  }
-  if (node.state === 'removed') {
-    return `${indent}- ${diffString}`;
-  }
-  if (node.state === 'updated') {
-    const removedStr = `${indent}- ${node.keyName}: ${printValue(node.oldValue, depth + 1)}\n`;
-    const addedStr = `${indent}+ ${node.keyName}: ${printValue(node.newValue, depth + 1)}`;
-    return removedStr + addedStr;
-  }
-  return null;
 };
 
 const getStylishFormat = (diff) => {
