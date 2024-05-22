@@ -12,16 +12,16 @@ const getDiffString = (obj, name) => {
     case 'updated': {
       const oldValue = getValueType(obj.oldValue);
       const newValue = getValueType(obj.newValue);
-      return { string: `Property '${fullPath}' was updated. From ${oldValue} to ${newValue}` };
+      return `Property '${fullPath}' was updated. From ${oldValue} to ${newValue}`;
     }
     case 'removed':
-      return { string: `Property '${fullPath}' was removed` };
+      return `Property '${fullPath}' was removed`;
     case 'added': {
       const addedValue = getValueType(obj.value);
-      return { string: `Property '${fullPath}' was added with value: ${addedValue}` };
+      return `Property '${fullPath}' was added with value: ${addedValue}`;
     }
     default:
-      return {};
+      return '';
   }
 };
 
@@ -37,9 +37,7 @@ const getPlainDiff = (diffArray, name = []) => {
 
 const getPlainFormat = (arr) => {
   const objectWithPlainStrings = getPlainDiff(arr);
-  const result = objectWithPlainStrings
-    .filter((el) => Object.keys(el).length !== 0)
-    .map((el) => el.string);
+  const result = objectWithPlainStrings.filter((el) => el.length !== 0);
   return result.join('\n');
 };
 
